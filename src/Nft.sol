@@ -22,7 +22,7 @@ contract Nft is ERC721 {
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
-         if (ownerOf(tokenId) == address(0)) {
+        if (ownerOf(tokenId) == address(0)) {
             revert Nft__TokenUriNotFound();
         }
         return s_tokenIdToUri[tokenId];

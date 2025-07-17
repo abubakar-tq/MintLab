@@ -5,9 +5,8 @@ import {Script} from "forge-std/Script.sol";
 import {Nft} from "src/Nft.sol";
 
 contract DeployNft is Script {
-    function run() external returns (Nft){
+    function run() external returns (Nft) {
         return deployNft();
-
     }
 
     function deployNft() public returns (Nft nft) {

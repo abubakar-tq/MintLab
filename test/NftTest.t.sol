@@ -44,14 +44,12 @@ contract NftTest is Test {
         assert(tokenCounter == 1);
     }
 
-    function testMultipleNftsMintedCorrectly() external mintNft{
+    function testMultipleNftsMintedCorrectly() external mintNft {
         vm.prank(USER);
         nft.mint(EXPECTED_TOKEN_URI);
 
-         string memory tokenUri = nft.tokenURI(1);
+        string memory tokenUri = nft.tokenURI(1);
 
         assertEq(keccak256(abi.encodePacked(EXPECTED_TOKEN_URI)), keccak256(abi.encodePacked(tokenUri)));
-
-
     }
 }
