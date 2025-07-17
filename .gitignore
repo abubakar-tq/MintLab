@@ -2,6 +2,8 @@
 cache/
 out/
 
+
+
 # Ignores development broadcast logs
 !/broadcast
 /broadcast/*/31337/
@@ -12,3 +14,10 @@ docs/
 
 # Dotenv file
 .env
+
+# === OS and Misc
+.DS_Store
+Thumbs.db
+
+# === GitHub-related
+.github/            
