@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Frontend (Next.js Mint UI)
 
-## Getting Started
+Next.js app that:
+- Connects a wallet (wagmi)
+- Uploads NFT media + metadata to IPFS via Pinata (`/api/upload`)
+- Calls the ERC-721 `mint(tokenUri)` function using the uploaded metadata URI
 
-First, run the development server:
+## Setup
 
 ```bash
+cp .env.example .env
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Required Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+See `frontend/.env.example`.
 
-## Learn More
+- `PINATA_JWT`: Pinata JWT used by the server route in `src/app/api/upload/route.js`
+- `PINATA_GATEWAY`: Your Pinata gateway domain (used by the SDK client)
 
-To learn more about Next.js, take a look at the following resources:
+## Contract Address
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Update `src/lib/contractAddresses.js` with your deployed contract address:
+- `31337`: Anvil local chain
+- `11155111`: Sepolia
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Build
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+npm run start
+```

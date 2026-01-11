@@ -2,22 +2,25 @@
 cache/
 out/
 
-
-
 # Ignores development broadcast logs
 !/broadcast
 /broadcast/*/31337/
 /broadcast/**/dry-run/
 
+# Reports (optional Foundry output)
+reports/
+
 # Docs
 docs/
 
-# Dotenv file
-.env
+# Env files (never commit real secrets)
+.env*
+!.env.example
 
 # === OS and Misc
 .DS_Store
 Thumbs.db
 
-# === GitHub-related
-.github/            
+# === Editor
+.idea/
+.vscode/

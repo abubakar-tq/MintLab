@@ -1,66 +1,83 @@
-## Foundry
+# Custom NFT Minting dApp (Foundry + Next.js)
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+End-to-end NFT minting project:
+- **Smart contracts**: ERC-721 written in Solidity and tested/deployed with **Foundry**
+- **Frontend**: **Next.js** UI that uploads NFT media + metadata to **IPFS via Pinata** and mints on-chain via **wagmi**
 
-Foundry consists of:
+## What’s Included
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+- `src/Nft.sol`: Minimal ERC-721 with `mint(tokenUri)` and an on-chain token URI mapping
+- `script/DeployNft.s.sol`: Deploy script (Foundry `forge script`)
+- `script/Interactions.s.sol`: Example mint script (uses `foundry-devops` to load last deployment)
+- `frontend/`: Next.js app (wallet connect + mint form + `/api/upload` for Pinata uploads)
 
-## Documentation
+## Quick Start (Local)
 
-https://book.getfoundry.sh/
+### Prerequisites
 
-## Usage
+- Foundry (`forge`, `anvil`, `cast`): https://book.getfoundry.sh/getting-started/installation
+- Node.js (LTS recommended) + npm
+- Git
 
-### Build
+### 1) Clone with submodules
 
-```shell
-$ forge build
+If you cloned without submodules:
+
+```bash
+git submodule update --init --recursive
 ```
 
-### Test
+### 2) Environment variables
 
-```shell
-$ forge test
+Create local env files from the examples:
+
+```bash
+cp .env.example .env
+cp frontend/.env.example frontend/.env
 ```
 
-### Format
+### 3) Run a local chain + deploy
 
-```shell
-$ forge fmt
+```bash
+make anvil
+make deploy-anvil
 ```
 
-### Gas Snapshots
+### 4) Run the frontend
 
-```shell
-$ forge snapshot
+Update the deployed contract address in `frontend/src/lib/contractAddresses.js` (chain id `31337` for Anvil), then:
+
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
-### Anvil
+Open `http://localhost:3000`.
 
-```shell
-$ anvil
+## Sepolia Deployment (Optional)
+
+1) Set `SEPOLIA_RPC_URL` + `ETHERSCAN_API_KEY` in `.env`
+2) Ensure you have a Foundry keystore account named `sepkey` (the Makefile uses `--account sepkey`)
+3) Deploy + verify:
+
+```bash
+make deploy-sepolia
 ```
 
-### Deploy
+## Useful Commands
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+- Contracts: `forge build`, `forge test`, `forge fmt`
+- Make targets: `make build`, `make test`, `make format`, `make deploy-anvil`, `make mint-nft`
 
-### Cast
+## Security Notes
 
-```shell
-$ cast <subcommand>
-```
+- Do not commit real secrets: `.env`, `frontend/.env`, API keys, private keys, JWTs.
+- This repo includes `.env.example` files for reproducible setup without exposing credentials.
 
-### Help
+## Repo Structure
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+- `src/`: Solidity contracts
+- `script/`: Foundry scripts (deploy + interactions)
+- `test/`: Foundry tests
+- `frontend/`: Next.js dApp
